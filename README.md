@@ -1,14 +1,9 @@
 # viewer
 
-The best project ever.
+A d3-based graph viewer on top of node.js.
 
 ## Getting Started
-Install the module with: `npm install viewer`
-
-```javascript
-var viewer = require('viewer');
-viewer.awesome(); // "awesome"
-```
+_(Coming soon)_
 
 ## Documentation
 _(Coming soon)_
