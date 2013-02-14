@@ -1,6 +1,6 @@
 {
   "name": "viewer",
-  "description": "The best project ever.",
+  "description": "A d3-based graph viewer on top of node.js.",
   "version": "0.1.0",
   "homepage": "https://github.com/jjadonotenter/viewer",
   "author": {
