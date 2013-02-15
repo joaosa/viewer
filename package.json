@@ -25,24 +25,27 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "grunt simplemocha"
+    "test": "node_modules/grunt-cli/bin/grunt simplemocha"
   },
   "dependencies": {
     "d3": "~3.0.6",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "http-browserify": "*"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.1.1rc6",
+    "grunt-cli": "*",
+    "grunt-contrib-jshint": ">=0.1.1rc6",
     "grunt-contrib-nodeunit": "~0.1.2rc6",
     "grunt-contrib-watch": "~0.2.0rc5",
-    "grunt": "~0.4.0rc7",
+    "grunt": "~0.4.0rc8",
     "grunt-simple-mocha": "~0.3.2",
     "should": "~1.2.1",
     "sinon": "~1.5.2",
-    "grunt-webpack": "~0.9.1",
+    "grunt-webpack": "latest",
     "grunt-browserify": "~0.1.2",
     "traverse": "~0.6.3",
-    "grunt-contrib-uglify": "~0.1.1rc6"
+    "grunt-contrib-uglify": "~0.1.1rc6",
+    "grunt-contrib-requirejs": "latest"
   },
   "keywords": []
 }
