@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/joaosa/viewer.png)](https://travis-ci.org/joaosa/viewer)
+
 # viewer
 
 A d3-based graph viewer on top of node.js.
