@@ -70,7 +70,6 @@ module.exports = function(grunt) {
     
     io.sockets.on('connection', function(socket) {
       var recursive = function () {
-          console.log("It has been one second!");
           socket.emit('stream', {"stream": [{"type": "node", "id": "H"}/*, {"type": "link", "source": "H", "target": "A"}*/]});
           setTimeout(recursive, 1000);
       };
