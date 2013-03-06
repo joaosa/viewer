@@ -39,7 +39,6 @@
     "grunt-contrib-watch": "~0.2.0rc5",
     "grunt": "~0.4.0rc8",
     "grunt-simple-mocha": "~0.3.2",
-    "should": "~1.2.1",
     "sinon": "~1.5.2",
     "grunt-browserify": "~0.1.2",
     "grunt-contrib-uglify": "~0.1.1rc6",
@@ -48,7 +47,8 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-cli": "~0.1.6",
     "connect": "~2.7.3",
-    "socket.io": "~0.9.13"
+    "socket.io": "~0.9.13",
+    "chai": "~1.5.0"
   },
   "keywords": []
 }
