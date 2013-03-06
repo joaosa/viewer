@@ -27,11 +27,11 @@ module.exports = function(grunt) {
       all: {
         src: 'test/**/*-test.js'
       }
-    },    
+    },
     browserify: {
-      dist: {
-        requires: ['traverse'],
-        entries: ['lib/**/*.js']
+      'dist/bundle.js': {
+        // requires: ['dist/*'],
+        entries: ['lib/**/*.js'],
       }
     },
     uglify: {
@@ -44,32 +44,34 @@ module.exports = function(grunt) {
       dist: {
         files: {
           "dist/bundle.min.js": ["dist/bundle.js"]
-        }       
+        }
       }
-    },    
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'simplemocha']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'simplemocha']
-      },
     },
+    watch: {
+      files: ['**/lib/*', 'index.html', 'Gruntfile.js'],
+      tasks: ['default']
+    },    
+    connect: {
+      server: {
+        options: {
+          base: '.',
+          keepalive: true
+        }
+      }
+    }
   });
 
-  // These plugins provide necessary tasks.  
+  // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  // grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  // grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'simplemocha']);
+  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify', /*'uglify',*/ 'copy']);
+
 };
