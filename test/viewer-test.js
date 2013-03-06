@@ -75,7 +75,7 @@ describe('Viewer', function() {
     describe('#dataIn()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
-        var data = viewer.dataIn(bulkData);        
+        var data = viewer.dataIn(bulkData);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
           data[p].should.be.a('array');
@@ -110,7 +110,7 @@ describe('Viewer', function() {
         });
         done();
       });
-    });    
+    });
   });
   // describe('data acquisition', function() {
   //   before(function(done) {
