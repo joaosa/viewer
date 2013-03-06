@@ -30,7 +30,8 @@
   "dependencies": {
     "d3": "~3.0.6",
     "underscore": "~1.4.4",
-    "http-browserify": "*"
+    "http-browserify": "*",
+    "socket.io-client": "~0.9.11"
   },
   "devDependencies": {
     "grunt-contrib-jshint": ">=0.1.1rc6",
