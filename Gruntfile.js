@@ -50,7 +50,7 @@ module.exports = function(grunt) {
     watch: {
       files: ['**/lib/*', 'index.html', 'Gruntfile.js'],
       tasks: ['default']
-    },    
+    },
     connect: {
       server: {
         options: {
@@ -59,6 +59,46 @@ module.exports = function(grunt) {
         }
       }
     }
+  });
+  
+  grunt.registerTask('server', 'Start a custom server.', function() {
+    var done = this.async();
+    var port = 9000;
+    grunt.log.writeln('Starting a web server on port ' + port);
+
+    var io = require('socket.io').listen(port).on('close', done);    
+    
+    io.sockets.on('connection', function(socket) {
+      var recursive = function () {
+          console.log("It has been one second!");
+          socket.emit('stream', {"stream": [{"type": "node", "id": "H"}/*, {"type": "link", "source": "H", "target": "A"}*/]});
+          setTimeout(recursive, 1000);
+      };
+      recursive();
+
+      socket.on('ready', function() {          
+          socket.emit('data', {
+          "nodes": [
+            {"id": "A"},
+            {"id": "B"},
+            {"id": "C"},
+            {"id": "D"},
+            {"id": "E"},
+            {"id": "F"},
+            {"id": "G"}
+          ],
+          "links": [
+            {"source": "A", "target": "B"},
+            {"source": "B", "target": "C"},
+            {"source": "A", "target": "D"},
+            {"source": "B", "target": "E"},
+            {"source": "C", "target": "E"},
+            {"source": "D", "target": "E"},
+            {"source": "E", "target": "F"},
+            {"source": "F", "target": "G"}]
+        });
+      });
+    });
   });
 
   // These plugins provide necessary tasks.
@@ -70,6 +110,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify'/*, 'uglify'*/]);
+  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify', 'connect'/*, 'uglify'*/]);
 
 };
