@@ -24,44 +24,43 @@ describe('Viewer', function() {
       {"source": "C", "target": "E"},
       {"source": "D", "target": "E"},
       {"source": "E", "target": "F"},
-      {"source": "F", "target": "G"}]
+      {"source": "F", "target": "G"}
+    ]
   };
   var streamData = {"stream": [{"type": "node", "id": "H"}, {"type": "link", "source": "H", "target": "A"}]};
   describe('#setupLayout()', function() {
-    before(function(done) {
-      viewer.setupLayout({w: 960, h: 500});
-      done();
-    });
     it('should set the expected layout properties', function(done) {
+      var layout = viewer.setupLayout({w: 960, h: 500});
       ['nodes', 'links', 'size', 'linkDistance', 'charge'].map(function(p) {
-        viewer.layout.should.have.property(p);
+        layout.should.have.property(p);
       });
       done();
     });
   });
   describe('#insertInLayout()', function() {
+    var layout,
+        nodes,
+        links;
     before(function(done) {
-      viewer.setupLayout({w: 480, h: 250});
-      viewer.insertInLayout(bulkData.nodes, bulkData.links);
+      layout = viewer.setupLayout({w: 480, h: 250});      
+      viewer.insertInLayout(bulkData.nodes, bulkData.links, layout);
+      nodes = layout.nodes();
+      links = layout.links();
       done();
     });
-    it('should insert nodes in the layout', function(done) {
-      var nodes = viewer.layout.nodes();
+    it('should insert nodes in the layout', function(done) {      
       bulkData.nodes.map(function(d) { return d.id; }).should.eql(nodes.map(function(d) { return d.id; }));
       done();
     });
-    it('should insert link sources in the layout', function(done) {
-      var links = viewer.layout.links();
+    it('should insert link sources in the layout', function(done) {      
       bulkData.links.map(function(d) { return d.source; }).should.eql(links.map(function(d) { return d.source.id; }));
       done();
     });
     it('should insert link targets in the layout', function(done) {
-      var links = viewer.layout.links();
       bulkData.links.map(function(d) { return d.target; }).should.eql(links.map(function(d) { return d.target.id; }));
       done();
     });
     it('should set correct link properties', function(done) {
-      var links = viewer.layout.links();
       ['index', 'weight', 'x', 'y', 'px', 'py'].map(function(p) {
         links.map(function(d) {
           d.source.should.have.property(p);
@@ -72,10 +71,10 @@ describe('Viewer', function() {
     });
   });
   describe('data formatting', function() {
-    describe('#dataIn()', function() {
+    describe('#bulkIn()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
-        var data = viewer.dataIn(bulkData);
+        var data = viewer.bulkIn(bulkData);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
           data[p].should.be.a('array');
