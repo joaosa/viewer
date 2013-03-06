@@ -30,8 +30,8 @@ module.exports = function(grunt) {
     },
     browserify: {
       'dist/bundle.js': {
-        // requires: ['dist/*'],
-        entries: ['lib/**/*.js'],
+        requires: ['./lib/viewer.js'],
+        // entries: ['lib/**/*.js']
       }
     },
     uglify: {
@@ -67,11 +67,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  // grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  // grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify', /*'uglify',*/ 'copy']);
+  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify'/*, 'uglify'*/]);
 
 };
