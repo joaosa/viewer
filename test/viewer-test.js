@@ -72,10 +72,6 @@ describe('Viewer', function() {
     });
   });
   describe('data formatting', function() {
-    before(function(done) {
-      // setup mock server
-      done();
-    });
     describe('#dataIn()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
