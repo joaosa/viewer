@@ -22,7 +22,7 @@ module.exports = function(grunt) {
       options: {
         globals: ['should'],
         uid: 'bdd',
-        reporter: 'tap'
+        reporter: 'nyan'
       },
       all: {
         src: 'test/**/*-test.js'
@@ -109,6 +109,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify', 'connect'/*, 'uglify'*/]);
+  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify'/*, 'uglify'*/]);
 
 };
