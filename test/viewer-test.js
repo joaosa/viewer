@@ -1,6 +1,7 @@
 'use strict';
 
 var chai = require('chai'),
+    _ = require('underscore'),
     viewer = require('../lib/viewer.js');
 
 chai.should();
@@ -42,17 +43,17 @@ describe('Viewer', function() {
         nodes,
         links;
     before(function(done) {
-      layout = viewer.setupLayout({w: 480, h: 250});      
+      layout = viewer.setupLayout({w: 480, h: 250});
       viewer.insertInLayout(bulkData.nodes, bulkData.links, layout);
       nodes = layout.nodes();
       links = layout.links();
       done();
     });
-    it('should insert nodes in the layout', function(done) {      
+    it('should insert nodes in the layout', function(done) {
       bulkData.nodes.map(function(d) { return d.id; }).should.eql(nodes.map(function(d) { return d.id; }));
       done();
     });
-    it('should insert link sources in the layout', function(done) {      
+    it('should insert link sources in the layout', function(done) {
       bulkData.links.map(function(d) { return d.source; }).should.eql(links.map(function(d) { return d.source.id; }));
       done();
     });
@@ -71,10 +72,53 @@ describe('Viewer', function() {
     });
   });
   describe('data formatting', function() {
+    describe('#getNodes()', function() {
+      it('should get only nodes from bulk data', function(done) {
+        var data = viewer.getNodes(bulkData);
+        data.length.should.above(0);
+        data.map(function(d) {
+          d.should.have.property('type', 'node');
+          d.should.have.property('id');
+        });
+        done();
+      });
+      it('should get only nodes from stream data', function(done) {
+        var data = viewer.getNodes(streamData);
+        data.length.should.above(0);
+        data.map(function(d) {
+          d.should.have.property('type', 'node');
+          d.should.have.property('id');
+        });
+        done();
+      });
+    });
+    describe('#getLinks()', function() {
+      it('should get only links from bulk data', function(done) {
+        var data = viewer.getLinks(bulkData);
+        data.length.should.above(0);
+        data.map(function(d) {
+          d.should.have.property('type', 'link');
+          d.should.have.property('source');
+          d.should.have.property('target');
+        });
+        done();
+      });
+      it('should get only links from stream data', function(done) {
+        var data = viewer.getLinks(streamData);
+        data.length.should.above(0);
+        data.map(function(d) {
+          d.should.have.property('type', 'link');
+          d.should.have.property('source');
+          d.should.have.property('target');
+        });
+        done();
+      });
+    });
     describe('#bulkIn()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
         var data = viewer.bulkIn(bulkData);
+        _.size(data).should.above(0);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
           data[p].should.be.a('array');
@@ -86,6 +130,7 @@ describe('Viewer', function() {
     describe('#streamIn()', function() {
       it('should format stream-ready nodes correctly', function(done) {
         var data = viewer.streamIn({'stream': viewer.getNodes(streamData)});
+        _.size(data).should.above(0);
         data.should.have.property('nodes');
         data.nodes.should.be.a('array');
         data.nodes.length.should.above(0);
@@ -94,6 +139,7 @@ describe('Viewer', function() {
       });
       it('should format stream-ready links correctly', function(done) {
         var data = viewer.streamIn({'stream': viewer.getLinks(streamData)});
+        _.size(data).should.above(0);
         data.should.have.property('nodes').with.length(0);
         data.should.have.property('links');
         data.links.should.be.a('array');
@@ -102,6 +148,7 @@ describe('Viewer', function() {
       });
       it('should format stream-ready simultaneous nodes and links correctly', function(done) {
         var data = viewer.streamIn(streamData);
+        _.size(data).should.above(0);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
           data[p].should.be.a('array');
