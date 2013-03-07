@@ -71,119 +71,117 @@ describe('Viewer', function() {
       done();
     });
   });
-  describe('data formatting', function() {
-    describe('#getNodes()', function() {
-      it('should get only nodes from bulk data', function(done) {
-        var data = viewer.getNodes(bulkData);
-        data.length.should.above(0);
-        data.map(function(d) {
-          d.should.have.property('type', 'node');
-          d.should.have.property('id');
-        });
-        done();
+  describe('#getNodes()', function() {
+    it('should get only nodes from bulk data', function(done) {
+      var data = viewer.getNodes(bulkData);
+      data.length.should.above(0);
+      data.map(function(d) {
+        d.should.have.property('type', 'node');
+        d.should.have.property('id');
       });
-      it('should get only nodes from stream data', function(done) {
-        var data = viewer.getNodes(streamData);
-        data.length.should.above(0);
-        data.map(function(d) {
-          d.should.have.property('type', 'node');
-          d.should.have.property('id');
-        });
-        done();
-      });
+      done();
     });
-    describe('#getLinks()', function() {
-      it('should get only links from bulk data', function(done) {
-        var data = viewer.getLinks(bulkData);
-        data.length.should.above(0);
-        data.map(function(d) {
-          d.should.have.property('type', 'link');
-          d.should.have.property('source');
-          d.should.have.property('target');
-        });
-        done();
+    it('should get only nodes from stream data', function(done) {
+      var data = viewer.getNodes(streamData);
+      data.length.should.above(0);
+      data.map(function(d) {
+        d.should.have.property('type', 'node');
+        d.should.have.property('id');
       });
-      it('should get only links from stream data', function(done) {
-        var data = viewer.getLinks(streamData);
-        data.length.should.above(0);
-        data.map(function(d) {
-          d.should.have.property('type', 'link');
-          d.should.have.property('source');
-          d.should.have.property('target');
-        });
-        done();
-      });
+      done();
     });
-    describe('#validLinks()', function() {
-      it('should exclude links that don\'t have a valid source/target node', function() {
-        var validLinks = viewer.validLinks(viewer.getLinks(streamData), viewer.getNodes(streamData));
-        validLinks.should.have.length(0);
+  });
+  describe('#getLinks()', function() {
+    it('should get only links from bulk data', function(done) {
+      var data = viewer.getLinks(bulkData);
+      data.length.should.above(0);
+      data.map(function(d) {
+        d.should.have.property('type', 'link');
+        d.should.have.property('source');
+        d.should.have.property('target');
       });
+      done();
     });
-    describe('#format()', function() {
-      it('should format bulk nodes only correctly', function(done) {
-        // sanity test
-        var data = viewer.format({'nodes': viewer.getNodes(bulkData)});
-        _.size(data).should.above(0);
-        ['nodes', 'links'].forEach(function(p) {
-          data.should.have.property(p);
-          data[p].should.be.a('array');
-        });
-        data.nodes.length.should.above(0);
-        data.links.length.should.equal(0);
-        done();
+    it('should get only links from stream data', function(done) {
+      var data = viewer.getLinks(streamData);
+      data.length.should.above(0);
+      data.map(function(d) {
+        d.should.have.property('type', 'link');
+        d.should.have.property('source');
+        d.should.have.property('target');
       });
-      it('should format bulk links only correctly', function(done) {
-        // sanity test
-        var data = viewer.format({'links': viewer.getLinks(bulkData)});
-        _.size(data).should.above(0);
-        ['nodes', 'links'].forEach(function(p) {
-          data.should.have.property(p);
-          data[p].should.be.a('array');          
-        });
-        data.nodes.length.should.equal(0);
-        data.links.length.should.above(0);
-        done();
+      done();
+    });
+  });
+  describe('#validLinks()', function() {
+    it('should exclude links that don\'t have a valid source/target node', function() {
+      var validLinks = viewer.validLinks(viewer.getLinks(streamData), viewer.getNodes(streamData));
+      validLinks.should.have.length(0);
+    });
+  });
+  describe('#format()', function() {
+    it('should format bulk nodes only correctly', function(done) {
+      // sanity test
+      var data = viewer.format({'nodes': viewer.getNodes(bulkData)});
+      _.size(data).should.above(0);
+      ['nodes', 'links'].forEach(function(p) {
+        data.should.have.property(p);
+        data[p].should.be.a('array');
       });
-      it('should format bulk nodes and links correctly', function(done) {
-        // sanity test
-        var data = viewer.format(bulkData);
-        _.size(data).should.above(0);
-        ['nodes', 'links'].forEach(function(p) {
-          data.should.have.property(p);
-          data[p].should.be.a('array');
-          data[p].length.should.above(0);
-        });
-        done();
+      data.nodes.length.should.above(0);
+      data.links.length.should.equal(0);
+      done();
+    });
+    it('should format bulk links only correctly', function(done) {
+      // sanity test
+      var data = viewer.format({'links': viewer.getLinks(bulkData)});
+      _.size(data).should.above(0);
+      ['nodes', 'links'].forEach(function(p) {
+        data.should.have.property(p);
+        data[p].should.be.a('array');          
       });
-      it('should format stream-ready nodes only correctly', function(done) {
-        var data = viewer.format({'data': viewer.getNodes(streamData)});
-        _.size(data).should.above(0);
-        data.should.have.property('nodes');
-        data.nodes.should.be.a('array');
-        data.nodes.length.should.above(0);
-        data.should.have.property('links').with.length(0);
-        done();
+      data.nodes.length.should.equal(0);
+      data.links.length.should.above(0);
+      done();
+    });
+    it('should format bulk nodes and links correctly', function(done) {
+      // sanity test
+      var data = viewer.format(bulkData);
+      _.size(data).should.above(0);
+      ['nodes', 'links'].forEach(function(p) {
+        data.should.have.property(p);
+        data[p].should.be.a('array');
+        data[p].length.should.above(0);
       });
-      it('should format stream-ready links only correctly', function(done) {
-        var data = viewer.format({'data': viewer.getLinks(streamData)});
-        _.size(data).should.above(0);
-        data.should.have.property('nodes').with.length(0);
-        data.should.have.property('links');
-        data.links.should.be.a('array');
-        data.links.length.should.above(0);
-        done();
+      done();
+    });
+    it('should format stream-ready nodes only correctly', function(done) {
+      var data = viewer.format({'data': viewer.getNodes(streamData)});
+      _.size(data).should.above(0);
+      data.should.have.property('nodes');
+      data.nodes.should.be.a('array');
+      data.nodes.length.should.above(0);
+      data.should.have.property('links').with.length(0);
+      done();
+    });
+    it('should format stream-ready links only correctly', function(done) {
+      var data = viewer.format({'data': viewer.getLinks(streamData)});
+      _.size(data).should.above(0);
+      data.should.have.property('nodes').with.length(0);
+      data.should.have.property('links');
+      data.links.should.be.a('array');
+      data.links.length.should.above(0);
+      done();
+    });
+    it('should format stream-ready simultaneous nodes and links correctly', function(done) {
+      var data = viewer.format(streamData);
+      _.size(data).should.above(0);
+      ['nodes', 'links'].forEach(function(p) {
+        data.should.have.property(p);
+        data[p].should.be.a('array');
+        data[p].length.should.above(0);
       });
-      it('should format stream-ready simultaneous nodes and links correctly', function(done) {
-        var data = viewer.format(streamData);
-        _.size(data).should.above(0);
-        ['nodes', 'links'].forEach(function(p) {
-          data.should.have.property(p);
-          data[p].should.be.a('array');
-          data[p].length.should.above(0);
-        });
-        done();
-      });
+      done();
     });
   });
   // describe('data acquisition', function() {
