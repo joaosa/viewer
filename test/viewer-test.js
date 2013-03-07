@@ -120,10 +120,10 @@ describe('Viewer', function() {
         validLinks.should.have.length(0);
       });
     });
-    describe('#bulkIn()', function() {
+    describe('#format()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
-        var data = viewer.bulkIn(bulkData);
+        var data = viewer.format(bulkData);
         _.size(data).should.above(0);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
@@ -132,10 +132,8 @@ describe('Viewer', function() {
         });
         done();
       });
-    });
-    describe('#streamIn()', function() {
-      it('should format stream-ready nodes correctly', function(done) {
-        var data = viewer.streamIn({'data': viewer.getNodes(streamData)});
+      it('should format stream-ready nodes only correctly', function(done) {
+        var data = viewer.format({'data': viewer.getNodes(streamData)});
         _.size(data).should.above(0);
         data.should.have.property('nodes');
         data.nodes.should.be.a('array');
@@ -143,8 +141,8 @@ describe('Viewer', function() {
         data.should.have.property('links').with.length(0);
         done();
       });
-      it('should format stream-ready links correctly', function(done) {
-        var data = viewer.streamIn({'data': viewer.getLinks(streamData)});
+      it('should format stream-ready links only correctly', function(done) {
+        var data = viewer.format({'data': viewer.getLinks(streamData)});
         _.size(data).should.above(0);
         data.should.have.property('nodes').with.length(0);
         data.should.have.property('links');
@@ -153,7 +151,7 @@ describe('Viewer', function() {
         done();
       });
       it('should format stream-ready simultaneous nodes and links correctly', function(done) {
-        var data = viewer.streamIn(streamData);
+        var data = viewer.format(streamData);
         _.size(data).should.above(0);
         ['nodes', 'links'].forEach(function(p) {
           data.should.have.property(p);
