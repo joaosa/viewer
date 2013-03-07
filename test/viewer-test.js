@@ -121,7 +121,31 @@ describe('Viewer', function() {
       });
     });
     describe('#format()', function() {
-      it('should format bulk data correctly', function(done) {
+      it('should format bulk nodes only correctly', function(done) {
+        // sanity test
+        var data = viewer.format({'nodes': viewer.getNodes(bulkData)});
+        _.size(data).should.above(0);
+        ['nodes', 'links'].forEach(function(p) {
+          data.should.have.property(p);
+          data[p].should.be.a('array');
+        });
+        data.nodes.length.should.above(0);
+        data.links.length.should.equal(0);
+        done();
+      });
+      it('should format bulk links only correctly', function(done) {
+        // sanity test
+        var data = viewer.format({'links': viewer.getLinks(bulkData)});
+        _.size(data).should.above(0);
+        ['nodes', 'links'].forEach(function(p) {
+          data.should.have.property(p);
+          data[p].should.be.a('array');          
+        });
+        data.nodes.length.should.equal(0);
+        data.links.length.should.above(0);
+        done();
+      });
+      it('should format bulk nodes and links correctly', function(done) {
         // sanity test
         var data = viewer.format(bulkData);
         _.size(data).should.above(0);
