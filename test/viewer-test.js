@@ -28,7 +28,7 @@ describe('Viewer', function() {
       {"source": "F", "target": "G"}
     ]
   };
-  var streamData = {"stream": [{"type": "node", "id": "H"}, {"type": "link", "source": "H", "target": "A"}]};
+  var streamData = {"data": [{"type": "node", "id": "H"}, {"type": "link", "source": "H", "target": "A"}]};
   describe('#setupLayout()', function() {
     it('should set the expected layout properties', function(done) {
       var layout = viewer.setupLayout({w: 960, h: 500});
@@ -135,7 +135,7 @@ describe('Viewer', function() {
     });
     describe('#streamIn()', function() {
       it('should format stream-ready nodes correctly', function(done) {
-        var data = viewer.streamIn({'stream': viewer.getNodes(streamData)});
+        var data = viewer.streamIn({'data': viewer.getNodes(streamData)});
         _.size(data).should.above(0);
         data.should.have.property('nodes');
         data.nodes.should.be.a('array');
@@ -144,7 +144,7 @@ describe('Viewer', function() {
         done();
       });
       it('should format stream-ready links correctly', function(done) {
-        var data = viewer.streamIn({'stream': viewer.getLinks(streamData)});
+        var data = viewer.streamIn({'data': viewer.getLinks(streamData)});
         _.size(data).should.above(0);
         data.should.have.property('nodes').with.length(0);
         data.should.have.property('links');
