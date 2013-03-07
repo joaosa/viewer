@@ -30,16 +30,13 @@
   "dependencies": {
     "d3": "~3.0.6",
     "underscore": "~1.4.4",
-    "http-browserify": "*",
     "socket.io-client": "~0.9.11"
   },
   "devDependencies": {
     "grunt-contrib-jshint": ">=0.1.1rc6",
-    "grunt-contrib-nodeunit": "~0.1.2rc6",
     "grunt-contrib-watch": "~0.2.0rc5",
     "grunt": "~0.4.0rc8",
     "grunt-simple-mocha": "~0.3.2",
-    "sinon": "~1.5.2",
     "grunt-browserify": "~0.1.2",
     "grunt-contrib-uglify": "~0.1.1rc6",
     "grunt-contrib-copy": "~0.4.0",
