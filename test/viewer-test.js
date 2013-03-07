@@ -114,6 +114,12 @@ describe('Viewer', function() {
         done();
       });
     });
+    describe('#validLinks()', function() {
+      it('should exclude links that don\'t have a valid source/target node', function() {
+        var validLinks = viewer.validLinks(viewer.getLinks(streamData), viewer.getNodes(streamData));
+        validLinks.should.have.length(0);
+      });
+    });
     describe('#bulkIn()', function() {
       it('should format bulk data correctly', function(done) {
         // sanity test
