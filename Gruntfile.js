@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     simplemocha: {
       options: {
         uid: 'bdd',
-        reporter: 'nyan'
+        reporter: 'spec'
       },
       all: {
         src: 'test/**/*-test.js'
@@ -65,10 +65,10 @@ module.exports = function(grunt) {
       default: {
         files: '<%= watchFiles %>',
         tasks: ['livereload']
-      }    
+      }
     }
   });
-  
+
   var path = require('path');
   var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 
@@ -81,16 +81,24 @@ module.exports = function(grunt) {
     var port = 9800;
     grunt.log.writeln('Starting a web server on port ' + port);
 
-    var io = require('socket.io').listen(port).on('close', done);    
-    
-    io.sockets.on('connection', function(socket) {
-      var recursive = function() {
-          socket.emit('stream', {"stream": [{"type": "node", "id": "H"}, {"type": "link", "source": "H", "target": "A"}]});
-          setTimeout(recursive, 1000);
-      };
-      recursive();
+    var io = require('socket.io').listen(port).on('close', done);
 
-      socket.on('ready', function() {          
+    io.sockets.on('connection', function(socket) {
+      var data = [        
+        {"type": "node", "id": "H"},
+        {"type": "link", "source": "H", "target": "A"}
+      ];
+      var recursive = function() {
+        function aux(i) {
+          i -= 1;
+          socket.emit('stream', {"stream": [data[i]]});
+          if (i === 0) { return; }
+          setTimeout(aux(i), 1000);
+        }
+        aux(data.length);
+      };
+
+      socket.on('ready', function() {
           socket.emit('data', {
           "nodes": [
             {"id": "A"},
@@ -111,6 +119,7 @@ module.exports = function(grunt) {
             {"source": "E", "target": "F"},
             {"source": "F", "target": "G"}]
         });
+        recursive();
       });
     });
   });
