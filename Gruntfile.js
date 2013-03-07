@@ -91,7 +91,7 @@ module.exports = function(grunt) {
       var recursive = function() {
         function aux(i) {
           i -= 1;
-          socket.emit('stream', {"stream": [data[i]]});
+          socket.emit('data', {"stream": [data[i]]});
           if (i === 0) { return; }
           setTimeout(aux(i), 1000);
         }
