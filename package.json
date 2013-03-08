@@ -25,7 +25,7 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "node_modules/grunt-cli/bin/grunt simplemocha"
+    "test": "grunt simplemocha"
   },
   "dependencies": {
     "d3": "~3.0.6",
