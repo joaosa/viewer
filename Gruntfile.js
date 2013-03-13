@@ -52,19 +52,12 @@ module.exports = function(grunt) {
       tasks: ['default']
     },
     connect: {
-      livereload: {
+      server: {
         options: {
           port: 9001,
-          middleware: function(connect) {
-            return [lrSnippet, folderMount(connect, '.')];
-          }
+          base: '.',
+          keepalive: true
         }
-      }
-    },
-    regarde: {
-      default: {
-        files: '<%= watchFiles %>',
-        tasks: ['livereload']
       }
     },
     blanket: {
@@ -78,13 +71,6 @@ module.exports = function(grunt) {
       }
     }
   });
-
-  var path = require('path');
-  var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
-
-  var folderMount = function folderMount(connect, point) {
-    return connect.static(path.resolve(point));
-  };
 
   grunt.registerTask('server', 'Start a custom server.', function() {
     var done = this.async();
@@ -144,11 +130,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-regarde');
-  grunt.loadNpmTasks('grunt-contrib-livereload');
   grunt.loadNpmTasks('grunt-blanket');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'blanket', 'simplemocha', 'browserify'/*, 'uglify'*/, 'livereload-start', 'connect', 'regarde']);
+  grunt.registerTask('default', ['jshint', 'blanket', 'simplemocha', 'browserify'/*, 'uglify'*/, 'watch']);
 
 };
