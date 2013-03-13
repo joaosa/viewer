@@ -25,7 +25,13 @@
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "grunt simplemocha"
+    "test": "grunt simplemocha",
+    "blanket": {
+      "pattern": "cov/*",
+      "data-cover-flags": {
+        "engineOnly": true
+      }
+    }
   },
   "dependencies": {
     "d3": "~3.0.6",
@@ -46,7 +52,8 @@
     "socket.io": "~0.9.13",
     "chai": "~1.5.0",
     "grunt-contrib-livereload": "~0.1.2",
-    "grunt-regarde": "~0.1.1"
+    "grunt-regarde": "~0.1.1",
+    "grunt-blanket": "~0.0.2"
   },
   "keywords": []
 }

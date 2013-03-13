@@ -14,9 +14,9 @@ module.exports = function(grunt) {
       lib: {
         src: ['lib/**/*.js']
       },
-      test: {
-        src: ['test/**/*.js']
-      },
+      // test: {
+      //   src: ['test/**/*.js']
+      // },
     },
     simplemocha: {
       options: {
@@ -66,6 +66,16 @@ module.exports = function(grunt) {
         files: '<%= watchFiles %>',
         tasks: ['livereload']
       }
+    },
+    blanket: {
+      instrument: {
+        options: {
+          debug: true
+        },
+        files: {
+          'cov/': ['lib/**/*.js'],
+        }
+      }
     }
   });
 
@@ -84,9 +94,12 @@ module.exports = function(grunt) {
     var io = require('socket.io').listen(port).on('close', done);
 
     io.sockets.on('connection', function(socket) {
-      var data = [        
+      var data = [
         {"type": "node", "id": "H"},
-        {"type": "link", "source": "H", "target": "A"}
+        {"type": "link", "source": "H", "target": "A"},
+        {"type": "link", "source": "H", "target": "I"},
+        {"type": "link", "source": "I", "target": "A"},
+        {"type": "node", "id": "I"}
       ];
       var recursive = function() {
         function aux(i) {
@@ -133,8 +146,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-regarde');
   grunt.loadNpmTasks('grunt-contrib-livereload');
+  grunt.loadNpmTasks('grunt-blanket');
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint',*/ 'simplemocha', 'browserify'/*, 'uglify'*/, 'livereload-start', 'connect', 'regarde']);
+  grunt.registerTask('default', ['jshint', 'blanket', 'simplemocha', 'browserify'/*, 'uglify'*/, 'livereload-start', 'connect', 'regarde']);
 
 };
