@@ -6,14 +6,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
       options: {
-        jshintrc: '.jshintrc'
+        jshintrc: '.jshintrc',
+        force: true
       },
       gruntfile: {
         src: 'Gruntfile.js'
       },
       lib: {
         src: ['lib/**/*.js']
-      },
+      }
       // test: {
       //   src: ['test/**/*.js']
       // },
@@ -21,16 +22,13 @@ module.exports = function(grunt) {
     simplemocha: {
       options: {
         uid: 'bdd',
-        reporter: 'spec'
+        reporter: 'tap'
       },
-      all: {
-        src: 'test/**/*-test.js'
-      }
+      all: { src: ['test/**/*.js'] }
     },
     browserify: {
       'dist/bundle.js': {
         requires: ['./lib/viewer.js']
-        // entries: ['lib/**/*.js']
       }
     },
     uglify: {
@@ -66,7 +64,7 @@ module.exports = function(grunt) {
           debug: true
         },
         files: {
-          'cov/': ['lib/**/*.js'],
+          'cov/': ['lib/']
         }
       }
     }
@@ -88,14 +86,19 @@ module.exports = function(grunt) {
         {"type": "node", "id": "I"}
       ];
       var recursive = function() {
-        function aux(i) {
-          i -= 1;
-          socket.emit('data', {"data": [data[i]]});
-          if (i === 0) { return; }
-          setTimeout(aux(i), 1000);
-        }
-        aux(data.length);
+        socket.emit('data', {"data": [data[0]]});
+        setTimeout(recursive, 1000);
       };
+      
+      // var recursive = function() {
+      //   function aux(i) {
+      //     i -= 1;
+      //     socket.emit('data', {"data": [data[i]]});
+      //     if (i === 0) { return; }
+      //     setTimeout(aux(i), 1000);
+      //   }
+      //   aux(data.length);
+      // };
 
       socket.on('ready', function() {
           socket.emit('data', {

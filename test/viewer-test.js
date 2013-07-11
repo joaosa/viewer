@@ -1,10 +1,9 @@
 'use strict';
 
-var chai = require('chai'),
-    _ = require('underscore'),
-    viewer = require('../lib/viewer.js');
+var _ = require('underscore'),
+    viewer = require('../cov/viewer.js');
 
-chai.should();
+require('chai').should();
 
 describe('Viewer', function() {
   var bulkData = {
@@ -114,9 +113,10 @@ describe('Viewer', function() {
     });
   });
   describe('#validLinks()', function() {
-    it('should exclude links that don\'t have a valid source/target node', function() {
+    it('should exclude links that don\'t have a valid source/target node', function(done) {
       var validLinks = viewer.validLinks(viewer.getLinks(streamData), viewer.getNodes(streamData));
       validLinks.should.have.length(0);
+      done();
     });
   });
   describe('#format()', function() {
