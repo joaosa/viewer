@@ -27,8 +27,9 @@ module.exports = function(grunt) {
       all: { src: ['test/**/*.js'] }
     },
     browserify: {
-      'dist/bundle.js': {
-        requires: ['./lib/viewer.js']
+      'dist/bundle.js': ['lib/**/*.js'],
+      options: {
+        alias: ['lib/viewer.js:viewer']
       }
     },
     uglify: {
