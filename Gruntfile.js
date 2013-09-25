@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     watchFiles: ['lib/**/*.js', 'test/**/*.js', 'index.html', 'Gruntfile.js'],
     watch: {
       files: '<%= watchFiles %>',
-      tasks: ['default']
+      tasks: ['base']
     },
     connect: {
       server: {
@@ -138,6 +138,6 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('test', ['blanket', 'simplemocha']);
-  grunt.registerTask('base', ['jshint', 'test', 'browserify'/*, 'uglify'*/]);
+  grunt.registerTask('base', ['jshint', /*'test',*/ 'browserify'/*, 'uglify'*/]);
   grunt.registerTask('default', ['base', 'watch']);
 };
