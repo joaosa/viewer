@@ -138,5 +138,6 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('test', ['blanket', 'simplemocha']);
-  grunt.registerTask('default', ['jshint', 'test', 'browserify'/*, 'uglify'*/, 'watch']);
+  grunt.registerTask('base', ['jshint', 'test', 'browserify'/*, 'uglify'*/]);
+  grunt.registerTask('default', ['base', 'watch']);
 };
