@@ -2,7 +2,10 @@
 
 # viewer
 
-A d3-based graph viewer on top of node.js.
+A [mbostock/d3](https://github.com/mbostock/d3)-based viewer for graphs/networks.
+
+It works by supplying the viewer with graph data in a specific JSON format.
+This communication is achieved through [LearnBoost/socket.io](https://github.com/LearnBoost/Socket.IO)
 
 ## Getting Started
 _(Coming soon)_
@@ -20,5 +23,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2013 Joao Andrade  
+Copyright (c) 2013 Joao Andrade
 Licensed under the MIT license.
